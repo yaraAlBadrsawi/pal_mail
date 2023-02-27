@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail/screen/auth/sing_up.dart';
+import 'package:pal_mail/screen/details_screen.dart';
+import 'package:pal_mail/screen/home.dart';
+import 'package:pal_mail/screen/new_inbox.dart';
+import 'package:pal_mail/screen/search.dart';
 import 'package:pal_mail/screen/splash_screen.dart';
+import 'package:pal_mail/screen/status.dart';
+import 'package:pal_mail/screen/tag_screen.dart';
 
 import 'constant/const.dart';
 
@@ -21,7 +27,6 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'First Method',
@@ -46,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: SingUpScreen(),
+      body: TagScreen(),
     );
   }
 }

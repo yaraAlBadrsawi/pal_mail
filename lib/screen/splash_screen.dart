@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
             'ديوان رئيس الوزراء',
             textAlign: TextAlign.center,
             style: GoogleFonts.ibmPlexSansArabic(
-                fontSize: 30, color: Colors.white),
+                fontSize: 30.sp, color: Colors.white),
           )
         ],
       ),

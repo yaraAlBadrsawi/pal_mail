@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pal_mail/widget/text_field.dart';
 
 import '../../constant/const.dart';
 
@@ -15,11 +16,16 @@ class SingUpScreen extends StatefulWidget {
 class _SingUpScreenState extends State<SingUpScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool isSignUp = false;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(
+      vsync: this,
+      length: 2,
+      animationDuration: const Duration(milliseconds: 850),
+    );
   }
 
   @override
@@ -72,17 +78,7 @@ class _SingUpScreenState extends State<SingUpScreen>
                       borderRadius: BorderRadius.all(
                         Radius.circular(59.r),
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: blueLightColor.withOpacity(0.7),
-                          blurRadius: 10,
-                          spreadRadius: 0.3,
-                          offset: const Offset(
-                            0.0, // Move to right 5  horizontally
-                            1.0, // Move to bottom 5 Vertically
-                          ),
-                        )
-                      ]),
+                      boxShadow: shadow),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,7 +98,7 @@ class _SingUpScreenState extends State<SingUpScreen>
                           unselectedLabelColor: primaryColor,
                           unselectedLabelStyle:
                               GoogleFonts.encodeSansSemiExpanded(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
+                                  fontSize: 14.sp, fontWeight: FontWeight.bold),
                           indicator: BoxDecoration(
                             borderRadius: BorderRadius.circular(
                               22.r,
@@ -117,13 +113,41 @@ class _SingUpScreenState extends State<SingUpScreen>
                             Tab(
                               text: 'sign up',
                               height: 32.h,
-                            )
+                            ),
                           ],
+                          onTap: (index) {
+                            setState(() {
+                              isSignUp = !isSignUp;
+                            });
+                          },
                         ),
                       ),
-                      TextFieldWidget(hint: 'Enter email or userName '),
-                      TextFieldWidget(hint: 'Password'),
-                      TextFieldWidget(hint: 'Confirm password'),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30.0, vertical: 10),
+                        child: TextFiledWidget(
+                          hint: 'Enter email or userName ',
+                          fontSize: 14,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30.0, vertical: 10),
+                        child: TextFiledWidget(
+                          hint: 'password',
+                          fontSize: 14,
+                        ),
+                      ),
+                      Visibility(
+                          visible: isSignUp ? true : false,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30.0, vertical: 10),
+                            child: TextFiledWidget(
+                              hint: 'confirm password',
+                              fontSize: 14,
+                            ),
+                          )),
                       SizedBox(
                         height: 72.h,
                       ),
@@ -148,7 +172,9 @@ class _SingUpScreenState extends State<SingUpScreen>
                             print(
                                 'width :::${MediaQuery.of(context).size.width}');
                           },
-                          child: const Text('Sign Up'),
+                          child: isSignUp
+                              ? const Text('Sign Up')
+                              : const Text('log in'),
                         ),
                       ),
                       SizedBox(
@@ -165,9 +191,9 @@ class _SingUpScreenState extends State<SingUpScreen>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          IconBox(image: 'assets/images/facebook.svg'),
-                          IconBox(image: 'assets/images/twitter.svg'),
-                          IconBox(image: 'assets/images/google.svg'),
+                          IconBox(image: 'assets/images/svg/facebook.svg'),
+                          IconBox(image: 'assets/images/svg/twitter.svg'),
+                          IconBox(image: 'assets/images/svg/google.svg'),
                         ],
                       ),
                       SizedBox(
@@ -197,30 +223,11 @@ class IconBox extends StatelessWidget {
     return Container(
         width: 54.w,
         height: 53.w,
-        margin: EdgeInsets.all(10),
-        padding: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(color: Colors.grey, width: 1)),
         child: SvgPicture.asset(image));
-  }
-}
-
-class TextFieldWidget extends StatelessWidget {
-  String hint;
-
-  TextFieldWidget({
-    required this.hint,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-      child: TextField(
-        decoration: InputDecoration(hintText: hint),
-      ),
-    );
   }
 }
